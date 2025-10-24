@@ -1,135 +1,179 @@
 # XR Painting System Test Plan (IP3 Prototype Testing Plan)
 
 ## 1. Project Overview (Project Pitch)
+
 This prototype extends the previous VR painting system to allow users to experience a more realistic painting process in a virtual environment.  
-Based on the existing “Canvas–Palette–Brush” system, this prototype focuses on testing several new features:
+Based on the existing **Canvas–Palette–Brush** system, this prototype focuses on testing several new features:
 
-1. **Toolbox System (Toolbox Switching):**  
-   Users can open the toolbox and select different tools such as brushes of different sizes and an eraser, supporting multiple drawing styles.
+### Toolbox System (Tool Switching)
+Users can open the toolbox and select different tools such as brushes of various sizes and an eraser, supporting multiple drawing styles.
 
-2. **Pigment Picking & Placement:**  
-   Users can pick colors from a pigment box and place them on the palette using a button press, forming visible “paint drops” for mixing.
+### Pigment Picking & Placement
+Users can pick colors from a pigment box and place them on the palette using a button press, forming visible “paint drops” for mixing.
 
-3. **Joystick Mixing System:**  
-   After placing two colors on the palette, users can rotate the **left joystick** to mix them.  
-   The more the joystick rotates, the higher the mixing ratio and the more blended the colors become.  
-   This simulates the real-world action of stirring paint, serving as a simplified physical mixing interaction.
+### Joystick Mixing System
+After placing two colors on the palette, users can rotate the **left joystick** to mix them.  
+The more the joystick rotates, the higher the mixing ratio and the more blended the colors become.  
+This simulates the real-world action of stirring paint, serving as a simplified physical mixing interaction.
 
-**Design Intent:**  
-The original idea was to support real physical mixing — rotating or stirring the brush in the palette to blend colors.  
-However, due to the high technical difficulty, this version uses joystick rotation to represent the mixing ratio.  
-The physical stirring concept is still included as a future design goal for comparison and further research.  
-Another technical issue is that the pigment drop system may conflict with the existing color-picking code, which could require rewriting part of the system.  
+### Design Intent
+The original idea was to support **real physical mixing** — rotating or stirring the brush in the palette to blend pigments.  
+However, due to high technical difficulty, this version uses joystick rotation to represent the mixing ratio.  
+The physical stirring concept remains a future design goal for comparison and further study.
 
-In addition, some **previous features will be optimized**. For example, when picking a color, the brush will now visually highlight the new color to fix feedback issues noted by tutors and classmates.
+In addition, several previous features were optimized. For example, when picking a color, the brush now visually highlights the new color to improve feedback clarity.
+
+---
+
+## 1.1 Original Design Intention vs. Final Implementation
+
+In the initial design concept, my goal was to recreate a fully realistic painting experience within a virtual environment.  
+Ideally, users would be able to **physically stir and rotate the brush inside the palette** to mix pigments, with each pigment behaving like real paint — slowly blending, flowing, and affecting the texture and layering of brush strokes on the canvas.
+
+However, during implementation, technical constraints in Unity XR (such as performance limits and shader complexity) made full physical pigment simulation unfeasible.  
+Therefore, I adopted a **simplified approach** to achieve a similar sense of realism:
+
+- The **left joystick rotation** now represents the degree of pigment mixing.  
+- The **transparency** of the pigment indicates the mixing progress — higher transparency means incomplete mixing; as the pigment becomes opaque, it represents a fully blended state.  
+
+To make up for the lack of physical stirring actions, I enhanced the **visual feedback** in several ways:  
+- When the brush successfully picks a color, the **resultBall** (mixing result sphere) now **emits light** and becomes temporarily opaque, clearly signaling successful color pickup.  
+- When the mixture is incomplete, strokes on the canvas display **layered or streaked colors**, showing partial mixing.  
+- When the mixture is complete, the color becomes uniform and stable, reflecting full blending.  
+
+This approach preserves the core idea of **embodied color mixing** while ensuring smooth performance and intuitive feedback in the XR environment.
 
 ---
 
 ## 2. Testing Objectives
-1. Verify whether users can intuitively understand and complete the tool switching task.  
-2. Verify whether users can correctly pick colors from the pigment box and place them on the palette.  
-3. Verify whether users can use the joystick rotation to complete the color-mixing task and understand the progress feedback.  
-4. Evaluate user perception of the mixed color’s visual quality, including “partial mixing” or “layered color” effects.  
-5. Explore user interest and feedback toward the **physical stirring** concept as a possible future feature.  
+
+- Verify whether users can intuitively understand and complete the tool switching task.  
+- Verify whether users can correctly pick pigments from the pigment box and place them on the palette.  
+- Verify whether users can use joystick rotation to complete the color-mixing task and interpret progress feedback.  
+- Evaluate user perception of the mixed color’s visual quality (partial mixing, layered effects).  
+- Explore user interest and feedback toward the **physical stirring** concept for future development.
 
 ---
 
 ## 3. Hypotheses
+
 | ID | Hypothesis |
 |----|-------------|
 | H1 | Most users can select tools from the toolbox without instruction. |
-| H2 | Users can independently complete picking and placing pigments onto the palette. (A potential challenge is whether users expect to paint directly after picking from the pigment box, or whether the mixed color will still preserve layered effects.) |
-| H3 | Users can understand that “rotating the joystick = increasing the mixing ratio” and complete the mixing task (reach ≥80% mixing). |
-| H4 | The visual feedback of mixing progress (progress ring/percentage) is clear to users. |
-| H5 | Users find the mixing process natural and fun, and express interest in future physical stirring interactions. |
+| H2 | Users can independently complete pigment picking and placement on the palette. |
+| H3 | Users can understand that “rotating the joystick = increasing the mixing ratio.” |
+| H4 | The visual feedback of mixing progress (progress ring/percentage) is clear. |
+| H5 | Users find the mixing process natural and enjoyable, expressing interest in physical stirring in future versions. |
 
 ---
 
 ## 4. Methodology
-- **Testing Environment:**  
-  Unity XR (Meta Quest 2/3s), standalone build.  
 
-- **Participants:**  
-  5–6 peers or tutors during class session.  
+- **Environment:** Unity XR (Meta Quest 2/3s), standalone build  
+- **Participants:** 5–6 peers or tutors during class sessions  
+- **Duration:** 5–6 minutes per participant  
 
-- **Duration:**  
-  About 5–6 minutes per participant.  
-
-- **Data Collection Methods:**  
-  - Observation logs (whether users can complete tasks independently)  
-  - Task completion time and error count  
-  - Post-test questionnaire (5-point Likert scale + open-ended questions)  
-  - Verbal and behavioral feedback  
+### Data Collection
+- Observation logs (whether tasks can be completed independently)  
+- Task completion time and error count  
+- Post-test questionnaire (5-point Likert + open-ended comments)  
+- Verbal and behavioral feedback  
 
 ---
 
 ## 5. Testing Tasks
+
 | Task ID | Description |
-|----------|--------------|
+|----------|-------------|
 | T1 | Find the toolbox and select the “brush” tool. |
-| T2 | Pick a pigment from the pigment box and press A/Trigger to place it on the palette. |
+| T2 | Pick a pigment from the pigment box and press Trigger to place it on the palette. |
 | T3 | Pick a second pigment and place it on the palette. |
-| T4 | Rotate the left joystick to mix colors until the progress ring shows “Mix ≥ 80%”. |
+| T4 | Rotate the left joystick to mix colors until the progress ring shows “Mix ≥ 80%.” |
 | T5 | Use the mixed color to paint one stroke on the canvas. |
 
 ---
 
 ## 6. Testing Procedure
-1. **Preparation**  
-   - Launch the prototype. Confirm all elements (canvas, toolbox, pigment box, and palette) are working.  
-2. **Free Exploration (1 minute)**  
-   - No instructions are given. Observe if the participant can understand the interactions naturally.  
-3. **Guided Testing (3 minutes)**  
-   - Ask participants to complete tasks T1–T5 in order.  
-4. **Feedback (1–2 minutes)**  
-   - Participants complete a short questionnaire and share verbal comments.  
+
+### Preparation
+Launch the prototype and confirm all elements (canvas, toolbox, pigment box, and palette) are functional.
+
+### Free Exploration (1 minute)
+No instructions are given. Observe whether participants can understand the interactions naturally.
+
+### Guided Testing (3 minutes)
+Ask participants to complete tasks **T1–T5** in order.
+
+### Feedback (1–2 minutes)
+Participants fill out a short questionnaire and share verbal comments.
 
 ---
 
-## 7. Metrics
-| Metric Type | Details |
-|--------------|----------|
-| Behavioral | Task completion rate (T1–T5), average completion time, error count |
-| Cognitive | Whether the user understands the joystick-mixing logic (Yes/No) |
-| Subjective | Mixing naturalness (1–5), clarity of feedback (1–5), intuitiveness of tool switching (1–5) |
-| Aesthetic | Interest in “layered color” effect and physical mixing idea (1–5 + open comments) |
+## 7. Step-by-Step Operation Manual
+
+### Step 1: Toolbox Interaction
+1. After entering the scene, locate the **toolbox** in front of you.  
+2. Use the controller to **grab different tools** — try various brushes and the eraser.  
+3. Switch between tools freely and test how they behave on the canvas.  
+
+### Step 2: Painting Experience
+1. Hold a brush and **press the Trigger button** to start painting on the canvas.  
+2. Observe how brush thickness changes with distance:  
+   - Closer → **thicker** strokes  
+   - Farther → **thinner** strokes  
+3. Adjusting distance simulates pressure control in real painting.  
+
+### Step 3: Pigment Placement and Mixing
+1. Find the **pigment section** in the toolbox and grab a pigment ball.  
+2. **Insert** it into the palette — a visual cue confirms successful placement.  
+3. Pick another pigment of a different color and place it on the palette.  
+4. **Rotate the left joystick** to mix pigments:  
+   - At the beginning, pigments appear **semi-transparent**, meaning partial mixing.  
+   - As you rotate more, transparency decreases — pigments gradually blend.  
+5. When pigments become **fully opaque**, they are completely mixed.  
+6. Touch the palette with your brush to pick the mixed color — the **resultBall glows**, indicating successful color pickup.  
+
+### Step 4: Painting with Mixed Colors
+1. Use the newly mixed color to paint on the canvas.  
+2. If mixing is incomplete, strokes show **layered/streaked color effects**.  
+3. If fully mixed, colors appear **uniform and smooth**.  
 
 ---
 
-## 8. Expected Results
-1. Over 80% of participants can complete most tasks without instruction.  
-   Some confusion is expected — for example, users may try to paint immediately after picking a pigment instead of placing it on the palette.  
-   This is a known limitation caused by avoiding code conflicts between the pigment and palette systems.  
-2. Understanding of mixing feedback (progress ring and percentage) will reach an average Likert score ≥4.0.  
-3. At least half of participants mention “wanting real stirring actions” or “more realistic mixing texture” in open responses.  
-4. Toolbox function will be rated intuitive and effective (average score ≥4.0).  
+## 8. Metrics
+
+| Type | Details |
+|------|----------|
+| **Behavioral** | Task completion rate (T1–T5), average time, error count |
+| **Cognitive** | Whether users understand joystick-mixing logic (Yes/No) |
+| **Subjective** | Mixing naturalness (1–5), feedback clarity (1–5), tool intuitiveness (1–5) |
+| **Aesthetic** | Interest in “layered color” and physical mixing (1–5 + comments) |
 
 ---
 
-## 9. Research Summary
-This project aims to let users—especially those without painting experience—enjoy a **realistic, material-based painting process** in XR without physical costs or art supplies.  
-Unlike common tablet drawing software, this design emphasizes **embodied interaction** and **materiality**, helping users reconnect with the physical relationship between the brush, pigment, and canvas in a virtual space.
+## 9. Expected Results
 
-Research shows that when digital interactions align with real-world bodily actions, immersion and creative motivation increase significantly [1].  
-The “flow experience” theory by Csikszentmihalyi [2] explains that continuous feedback and bodily engagement are central to emotional satisfaction during creative activities.  
-Zhang et al. [3] demonstrated that combining visual and haptic feedback in virtual painting tools improves realism and user control.  
-Gallace and Spence [4] proposed the *Haptic Aesthetic Processing Model*, showing that aesthetic experience depends not only on vision but also on touch and motion feedback.  
-Finally, Elswit [5] highlighted how body awareness extends between digital and physical spaces, suggesting that movement and sensory connection create psychological resonance in virtual art creation.
-
-Building on these findings, this project uses a simplified interaction chain—**pick, place, and mix**—to simulate the tactile process of real painting.  
-Although physical stirring is not yet implemented, the intention reflects the core value of “embodied artistic experience,” providing a theoretical and experimental basis for future iterations involving tactile feedback and realistic pigment-blending algorithms.
-
-### References
-[1] P. Dourish, *Where the Action Is: The Foundations of Embodied Interaction*, MIT Press, 2001.  
-[2] M. Csikszentmihalyi, *Flow: The Psychology of Optimal Experience*, Harper & Row, 1990.  
-[3] M. Otsuki, K. Sugihara, A. Toda, F. Shibata, and A. Kimura, “A brush device with visual and haptic feedback for virtual painting of 3D virtual objects,” *Virtual Reality*, vol. 22, pp. 1–15, June 2018, doi: 10.1007/s10055-017-0317-0.  
-[4] A. Gallace and C. Spence, “A model for haptic aesthetic processing and its implications for design,” *Proceedings of the IEEE*, vol. 100, no. 9, pp. 1–11, 2012, doi: 10.1109/JPROC.2012.2219831.  
-[5] K. Elswit, “Dancing with Coronaspheres: Expanded Breath Bodies and the Politics of Public Movement in the Age of COVID-19,” *Cultural Studies*, vol. 37, no. 6, pp. 894–916, 2023, doi: 10.1080/09502386.2022.2073459.
+- Over 80% of participants can complete most tasks without instruction.  
+- Some confusion may occur (e.g., users painting immediately after pigment pickup).  
+- Mixing feedback (progress ring/opacity) expected average ≥ 4.0.  
+- At least half of users express interest in **real stirring actions** or **more realistic pigment texture**.  
+- Toolbox usability rated intuitive and effective (≥ 4.0 average).
 
 ---
 
-## 10. Future Work
-- Implement **real stirring motion recognition**, allowing brush rotation to trigger pigment blending.  
-- Add **AR color sampling**, enabling users to capture real-world colors and bring them into the palette.  
-- Improve **color-mixing algorithms** (e.g., Oklab or RYB models) for more natural transitions.  
-- Add **visual and haptic feedback**, such as vibration and sound effects, to enhance immersion.  
+## 10. Research Summary
+
+This project allows users—especially those without painting experience—to enjoy a **realistic, material-based painting process** in XR without real-world costs.  
+Unlike tablet drawing apps, this design emphasizes **embodied interaction** and **materiality**, reconnecting users with the physical relationship between brush, pigment, and canvas.
+
+Previous studies (Dourish, Csikszentmihalyi, Otsuki, Gallace & Spence, Elswit) show that combining bodily movement and sensory feedback enhances immersion, flow, and creative satisfaction.  
+By implementing a simplified interaction chain — **pick, place, and mix** — this system provides a foundation for future physical mixing and tactile feedback research.
+
+---
+
+## 11. Future Work
+
+- Implement **real stirring motion recognition**, allowing brush rotation to trigger blending.  
+- Add **AR color sampling** to import real-world colors into the palette.  
+- Improve **color-mixing algorithms** (e.g., Oklab or RYB) for more natural results.  
+- Add **vibration and sound feedback** to enhance immersion.  
